@@ -25,12 +25,13 @@ func main() {
 
 	fmt.Printf("Connected!")
 
-	if len(os.Args) < 2 {
-		log.Fatalf("There are no city name")
-	}
-	cityName := os.Args[1]
-	city := City{}
-	db.Get(&city, "SELECT * FROM city WHERE Name=?", cityName)
+	db.Exec("INSERt INTO city (Name, CountryCode, District, Population) VALUES ('Hogsmeade', 'JPN', 'Hogsmeade', 3000)")
 
-	fmt.Printf("%sの人口は%d人です\n", city.Name, city.Population)
+	cities := []City{}
+	// db.Select(&cities, "SELECT * FROM city WHERE CountryCode='JPN'")
+
+	fmt.Println("日本の都市一覧")
+	for _, city := range cities {
+		fmt.Printf("都市名: %s, 人口: %d人\n", city.Name, city.Population)
+	}
 }
